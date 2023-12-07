@@ -7,11 +7,7 @@ const VideoPlayer = ({ videoUrl }) => {
 
   useEffect(() => {
     // Fetch the video data as a stream when the component mounts
-    fetch(videoUrl, {
-    //   headers: {
-    //     Range: "bytes=0-" + (10 ** 6 - 1), // Request the first 1,000,000 bytes of the video
-    //   },
-    })
+    fetch(videoUrl)
       .then((response) => {
         console.log("Fetch response:", response);
         return response.blob();
@@ -30,15 +26,20 @@ const VideoPlayer = ({ videoUrl }) => {
   }, [videoUrl]);
 
   return (
-    <div className="grid place-content-center">
-      {videoBlobUrl && (
-        <video
-          className="w-[300px] h-[calc(100vh-88px)]"
-          src={videoBlobUrl}
-          autoPlay
-          controls
-        />
-      )}
+    <div className="min-h-screen bg-purple-100">
+      <div className="flex flex-col justify-center w-[60%] p-12">
+        <h1 className="text-3xl font-bold pb-4">Video Player</h1>
+        <div className="w-full">
+          {videoBlobUrl && <video src={videoBlobUrl} autoPlay controls muted />}
+        </div>
+      <div className="mt-4 font-bold text-2xl">
+        <h1>Classic</h1>
+      </div>
+      <div className="mt-4 font-bold text-2xl">
+        <h1>Video Description</h1>
+        <p className="mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
     </div>
   );
 };

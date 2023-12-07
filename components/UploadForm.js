@@ -3,24 +3,49 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { refreshToken } from "../features/auth/AuthToken";
 
 function UploadForm() {
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
-  const [thumbnail, setThumbnail] = useState(null);
+  const [Description, setDescription] = useState("");
 
   const submitForm = async (event) => {
     event.preventDefault();
 
     const formData = new FormData();
+    console.log(file);
     formData.append("title", title);
     formData.append("myVideo", file);
-    formData.append("thumbnail", thumbnail);
 
-    const response = await fetch("http://localhost:4000/api/upload", {
+    formData.append("Description", Description);
+
+    const token = localStorage.getItem("token");
+
+    const response = await fetch("http://localhost:4000/api/video/upload", {
       method: "POST",
       body: formData,
+      headers: {
+        Authorization: "Bearer " + token
+      },
     });
+
+    const data = await response.json();
+
+    if (response.status === 403) {
+      await refreshToken();
+      const response = await fetch("http://localhost:4000/api/video/upload", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      
+      const data = await response.json();
+      console.log(data);
+
+    }
 
     if (response.status === 200) {
       toast.success("Video uploaded successfully"),
@@ -33,7 +58,7 @@ function UploadForm() {
           draggable: true,
           progress: undefined,
         };
-      FormData.reset();
+      
     } else {
       toast.error("Error uploading video"),
         {
@@ -61,6 +86,26 @@ function UploadForm() {
           type="text"
           onChange={(e) => setTitle(e.target.value)}
           className="border border-gray-300 px-4 py-2 w-full rounded-lg"
+          required
+          placeholder="Enter video title"
+          defaultValue={""}
+        />
+      </div>
+
+      <label className="block text-lg font-semibold mb-4 text-gray-800">
+        Description
+      </label>
+      <div className="mb-4">
+        <textarea
+          onChange={(e) => setDescription(e.target.value)}
+          className="border border-gray-300 px-4 py-2 w-full rounded-lg"
+          rows="4"
+          cols="50"
+          defaultValue={""}
+          required
+          placeholder="Enter video description"
+          draggable="false"
+
         />
       </div>
 
@@ -72,17 +117,7 @@ function UploadForm() {
           type="file"
           onChange={(e) => setFile(e.target.files[0])}
           className="border border-gray-300 px-4 py-2 w-full rounded-lg"
-        />
-      </div>
-
-      <label className="block text-lg font-semibold mb-4 text-gray-800">
-        Upload Thumbnail
-      </label>
-      <div className="mb-4">
-        <input
-          type="file"
-          onChange={(e) => setThumbnail(e.target.files[0])}
-          className="border border-gray-300 px-4 py-2 w-full rounded-lg"
+          required
         />
       </div>
 
