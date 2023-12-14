@@ -1,7 +1,19 @@
+"use client";
 import Link from "next/link";
 import { Button } from "../components/ui/button";
+import { AuthContext } from "@/features/auth/AuthContext";
+import { useContext } from "react";
+import { useRouter } from "next/navigation";
 
 const Hero = () => {
+  const { isLoggedIn } = useContext(AuthContext);
+
+  const router = useRouter();
+
+  if (isLoggedIn) {
+    router.push("/dash");
+  }
+
   return (
     <section className="w-full h-[calc(100vh-88px)] bg-[url(https://images.unsplash.com/photo-1617957796182-4b6047098686?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fHB1cnBsZSUyMGhlcm8lMjBzZWN0aW9ufGVufDB8fDB8fHww)] bg-cover bg-center bg-no-repeat ">
       <div className="w-full h-full flex items-center justify-center text-white">

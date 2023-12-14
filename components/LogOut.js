@@ -38,7 +38,7 @@ export const LogOut = () => {
               progress: undefined,
             });
             setIsLoggedIn(false);
-            localStorage.removeItem("token");
+            localStorage.clear();
             router.push("/");
           }
         })

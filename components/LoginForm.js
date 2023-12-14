@@ -107,7 +107,7 @@ const LoginForm = () => {
     }
   };
 
-return !localStorage.getItem("token") ? (
+return (
   <div className="flex items-center justify-center min-h-screen bg-purple-100">
     <div className="w-96">
       <div className="flex flex-col gap-10 items-center bg-slate-100 rounded-xl p-6 shadow-lg">
@@ -171,9 +171,8 @@ return !localStorage.getItem("token") ? (
       </div>
     </div>
   </div>
-) : (
-  router.replace("/dash")
-);
+)
+
 }
     
 

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import VideoList from "@/components/Videolist";
 import { AuthContext } from "@/features/auth/AuthContext";
 import { useContext , useEffect} from "react";

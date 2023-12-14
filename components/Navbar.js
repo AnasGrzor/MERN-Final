@@ -49,14 +49,10 @@ const Navbar = () => {
       <div className="mt-4 md:mt-0 flex">
         {isLoggedIn && (
           <>
-            <Button
-              variant="default"
-              className="text-lg mr-4 bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
-            >
-              <Link href="/vidupload">Upload</Link>
-            </Button>
             <Avatar className="w-10 h-10 mr-4">
+            <Link href="/profile">
               <AvatarImage src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
+            </Link>
               <AvatarFallback>
                 <span className="sr-only">Upload</span>
                 <svg
@@ -75,6 +71,12 @@ const Navbar = () => {
                 </svg>
               </AvatarFallback>
             </Avatar>
+            <Button
+              variant="default"
+              className="text-lg mr-4 bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+            >
+              <Link href="/vidupload">Upload</Link>
+            </Button>
           </>
         )}
         <Button
