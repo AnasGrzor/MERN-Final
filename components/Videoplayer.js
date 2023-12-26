@@ -1,12 +1,16 @@
 "use client"
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import ReactPlayer from "react-player";
+import { VideoPlayerSkeleton } from "./VideoPlayerSkeleton";
 
 const VideoPlayer = ({ videoUrl }) => {
   const [videoBlobUrl, setVideoBlobUrl] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
 
   useEffect(() => {
+    setIsLoading(true);
     // Fetch the video data as a stream when the component mounts
     fetch(videoUrl, {
       headers: {
@@ -27,6 +31,7 @@ const VideoPlayer = ({ videoUrl }) => {
         console.log("Created Blob URL:", url);
 
         setVideoBlobUrl(url);
+        setIsLoading(false);
 
         // Clean up function
         return () => URL.revokeObjectURL(url);
@@ -34,9 +39,11 @@ const VideoPlayer = ({ videoUrl }) => {
   }, [videoUrl]);
 
   return (
-    <div className="bg-purple-100">
-        <div className="w-[50vw]">
-          {videoBlobUrl && <video src={videoBlobUrl} autoPlay controls muted />}
+    <div>
+    {isLoading && <VideoPlayerSkeleton />}
+        <div>
+          {/* {videoBlobUrl && <ReactPlayer url={videoBlobUrl} controls={true} width="100%" height="100%" playIcon={<PlayIcon className="w-12 h-12" />} playing={true} muted={true} />} */}
+          <ReactPlayer url={videoBlobUrl} controls={true} playing muted width="100%" />
         </div>
     </div>
   );

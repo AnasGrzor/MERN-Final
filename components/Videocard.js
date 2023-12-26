@@ -45,24 +45,29 @@ const Videocard = ({ file }) => {
     );
   };
   return (
-    <div className="relative flex flex-col items-center ml-12 mt-4 ">
+    <div className="relative flex flex-col items-center ml-12 mt-4">
       {showVideoPlayer && (
-        <div className="fixed inset-0 z-50">
-          <div className="flex items-center justify-center w-full h-full bg-black bg-opacity-75 ">
-            <div className="w-[50vw] h-full bg-black bg-opacity-75 flex items-center justify-center">
-              <h1 className="absolute top-12 left-[26%] text-3xl font-bold text-white">
+        <div className="fixed flex flex-col items-center justify-center z-50 inset-0 filter backdrop-blur-lg">
+          <div className="bg-black/80 w-full max-w-[600px] max-h-[500px] flex flex-col rounded-xl ">
+            <div className="p-2 flex">
+              <h1 className="text-3xl font-bold text-muted-foreground">
                 {title}
               </h1>
-              <VideoPlayer
-                videoUrl={`http://localhost:4000/api/video/stream/${URL}`}
-              />
-
-              <button
-                className="absolute top-4 right-4 text-white"
-                onClick={closeVideoPlayer}
-              >
-                <Cross1Icon />
+              <button className="ml-auto">
+                <Cross1Icon
+                  onClick={closeVideoPlayer}
+                  className="w-6 h-6 text-white"
+                />
               </button>
+            </div>
+            <VideoPlayer
+              videoUrl={`http://localhost:4000/api/video/stream/${URL}`}
+            />
+            <div className="p-2">
+              <h4 className="text-lg font-bold text-muted-foreground">
+                Description
+              </h4>
+              <p className="text-sm text-muted-foreground">{description}</p>
             </div>
           </div>
         </div>
@@ -77,7 +82,7 @@ const Videocard = ({ file }) => {
           className="w-full h-full object-cover rounded-2xl"
         />
       </div>
-      <div className="bg-purple-400 w-[320px] p-2 rounded-b-2xl -translate-y-8">
+      <div className="bg-purple-400 w-[320px] p-2 rounded-b-2xl -translate-y-8 z-0">
         <div className="flex items-center ">
           <UserProfileIcon />
           <div className="flex flex-col ml-2">
