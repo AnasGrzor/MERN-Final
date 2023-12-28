@@ -43,7 +43,7 @@ const VideoPlayer = ({ videoUrl }) => {
     {isLoading && <VideoPlayerSkeleton />}
         <div>
           {/* {videoBlobUrl && <ReactPlayer url={videoBlobUrl} controls={true} width="100%" height="100%" playIcon={<PlayIcon className="w-12 h-12" />} playing={true} muted={true} />} */}
-          <ReactPlayer url={videoBlobUrl} controls={true} playing muted width="100%" />
+          <ReactPlayer url={videoBlobUrl} controls={true} playing muted width="100%" height="275px" />
         </div>
     </div>
   );

@@ -2,9 +2,18 @@
 import { useState } from "react";
 import VideoPlayer from "./Videoplayer";
 import { Cross1Icon } from "@radix-ui/react-icons";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
+import { Button } from "./ui/button";
 
 const Videocard = ({ file }) => {
-  const [showVideoPlayer, setShowVideoPlayer] = useState(false);
+  const [showVideoPlayer, setShowVideoPlayer] = useState(true);
 
   const title = file.title;
   const createdAt = file.createdAt;
@@ -28,8 +37,6 @@ const Videocard = ({ file }) => {
     day: "numeric",
     hour: "numeric",
     minute: "numeric",
-    second: "numeric",
-    timeZoneName: "short",
   });
 
   const UserProfileIcon = () => {
@@ -45,52 +52,51 @@ const Videocard = ({ file }) => {
     );
   };
   return (
-    <div className="relative flex flex-col items-center ml-12 mt-4">
+    <div className="flex">
       {showVideoPlayer && (
-        <div className="fixed flex flex-col items-center justify-center z-50 inset-0 filter backdrop-blur-lg">
-          <div className="bg-black/80 w-full max-w-[600px] max-h-[500px] flex flex-col rounded-xl ">
-            <div className="p-2 flex">
-              <h1 className="text-3xl font-bold text-muted-foreground">
-                {title}
-              </h1>
-              <button className="ml-auto">
-                <Cross1Icon
-                  onClick={closeVideoPlayer}
-                  className="w-6 h-6 text-white"
+        <div className="w-[320px] flex justify-center items-center h-[220px] mt-16 ml-4 mr-4">
+          <Dialog>
+            <DialogTrigger asChild className="">
+              <Button variant="ghost" size="sm" className="ml-auto">
+                <div className="flex flex-col">
+                  <div
+                    className="w-[320px] h-[220px] bg-cover bg-center rounded-2xl shadow-lg cursor-pointer"
+                    onClick={handlePlay}
+                  >
+                    <img
+                      src={thumbnail}
+                      alt="thumbnail"
+                      className="w-full h-full object-cover rounded-2xl"
+                    />
+                  </div>
+                  <div className="bg-purple-400 w-[320px] p-2 rounded-b-2xl -translate-y-8 z-0 flex">
+                    <div className="flex items-center">
+                      <UserProfileIcon />
+                      <div className="flex flex-col ml-4 items-start">
+                        <h1 className="text-lg font-bold">{title}</h1>
+                        <p className="text-gray-500 text-xs">{FormatedDate}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>{title}</DialogTitle>
+              </DialogHeader>
+              <div className="w-[462px] h-[271px]">
+                <VideoPlayer
+                  videoUrl={`http://localhost:4000/api/video/stream/${URL}`}
                 />
-              </button>
-            </div>
-            <VideoPlayer
-              videoUrl={`http://localhost:4000/api/video/stream/${URL}`}
-            />
-            <div className="p-2">
-              <h4 className="text-lg font-bold text-muted-foreground">
-                Description
-              </h4>
-              <p className="text-sm text-muted-foreground">{description}</p>
-            </div>
-          </div>
+              </div>
+              <div>
+                {description && <p className="text-gray-500">{description}</p>}
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       )}
-      <div
-        className="w-[320px] h-[220px] bg-cover bg-center rounded-2xl shadow-lg cursor-pointer"
-        onClick={handlePlay}
-      >
-        <img
-          src={thumbnail}
-          alt="thumbnail"
-          className="w-full h-full object-cover rounded-2xl"
-        />
-      </div>
-      <div className="bg-purple-400 w-[320px] p-2 rounded-b-2xl -translate-y-8 z-0">
-        <div className="flex items-center ">
-          <UserProfileIcon />
-          <div className="flex flex-col ml-2">
-            <h1 className="text-lg font-bold">{title}</h1>
-            <p className="text-gray-500 text-xs">{FormatedDate}</p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
