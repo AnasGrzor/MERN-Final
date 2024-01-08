@@ -62,7 +62,7 @@ const VideoPlayerDialog = ({
           </DialogHeader>
           <div className="w-[462px] h-[271px]">
             <VideoPlayer
-              videoUrl={`https://wizbackend.cyclic.app/api/video/stream/${URL}`}
+              videoUrl={`wiz-app-backend.vercel.app/api/video/stream/${URL}`}
             />
           </div>
           <div>
