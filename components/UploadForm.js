@@ -40,7 +40,7 @@ function UploadForm() {
 
     const token = localStorage.getItem("token");
 
-    const response = await fetch("http://localhost:4000/api/video/upload", {
+    const response = await fetch("https://wizbackend.cyclic.app/api/video/upload", {
       method: "POST",
       body: formData,
       headers: {
