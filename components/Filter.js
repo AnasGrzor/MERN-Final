@@ -52,7 +52,7 @@ export const Filter = ({ videos, setFilteredVideos }) => {
           onValueChange={handleFilterChange}
         >
           <DropdownMenuRadioItem value="None">None</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="sports">Sports</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="Sports">Sports</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="Music">Music</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="Entertainment">
             Entertainment
