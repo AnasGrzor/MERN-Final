@@ -12,6 +12,7 @@ const SignupForm = () => {
     username: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -24,6 +25,7 @@ const SignupForm = () => {
   const handleSubmit = async (e) => {
     // Prevent form submission
     e.preventDefault();
+    console.log("clicked")
 
     // Validate the form fields
     const validationErrors = {};
@@ -37,6 +39,8 @@ const SignupForm = () => {
     }
     if (!formData.password.trim()) {
       validationErrors.password = "Password is required";
+    } else if (!formData.password.length > 4 || !formData.password.length > 20) {
+      validationErrors.password = "Password must be at least 4 characters long and no more than 20 characters";
     }
 
     if (!formData.confirmPassword.trim()) {
@@ -48,6 +52,7 @@ const SignupForm = () => {
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      console.log("errors", validationErrors)
       return;
     }
 
@@ -174,9 +179,17 @@ const SignupForm = () => {
               Confirm Password
             </label>
             <input
+              id="confirmPassword"
               type="password"
-              className="p-3 border border-gray-200 rounded-lg w-full outline-none"
+              className={`p-3 border border-gray-200 rounded-lg w-full outline-none ${
+                errors.password ? "border-red-500" : ""
+              }`}
+              value={formData.confirmPassword}
+              onChange={handleChange}
             />
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
+            )}
           </div>
           <p>
             Already have an account?{" "}
@@ -186,7 +199,7 @@ const SignupForm = () => {
           </p>
           {/* ... (form submission button) */}
           <button
-            onClick={handleSubmit}
+            type="submit"
             className="content-center bg-purple-400 font-bold py-2 w-full rounded mt-6 hover:bg-purple-500 text-gray-800"
           >
             Get Started

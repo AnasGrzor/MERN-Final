@@ -9,16 +9,34 @@ function UploadForm() {
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
   const [Description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
 
   const submitForm = async (event) => {
     event.preventDefault();
 
+    if (!file || file.type !== "video/mp4" ) {
+          toast.error("Please select a valid MP4 file");
+          return;
+    }
+
+    if (!title || !Description || !category) {
+      toast.error("Please enter a title and description and category");
+      return;
+    }
+
+    if (file.size > 15000000) {
+      toast.error("Please select a file smaller than 15MB");
+      return;
+    }
+
     const formData = new FormData();
     console.log(file);
+    const user = JSON.parse(localStorage.getItem("profile"));
     formData.append("title", title);
     formData.append("myVideo", file);
-
+    formData.append("pfp",user.profilePic)
     formData.append("Description", Description);
+    formData.append("category", category);
 
     const token = localStorage.getItem("token");
 
@@ -31,6 +49,7 @@ function UploadForm() {
     });
 
     const data = await response.json();
+    console.log(data);
 
     if (response.status === 403) {
       await refreshToken();
@@ -41,7 +60,7 @@ function UploadForm() {
           Authorization: "Bearer " + token,
         },
       })
-      
+
       const data = await response.json();
       console.log(data);
 
@@ -58,7 +77,7 @@ function UploadForm() {
           draggable: true,
           progress: undefined,
         };
-      
+
     } else {
       toast.error("Error uploading video"),
         {
@@ -98,14 +117,13 @@ function UploadForm() {
       <div className="mb-4">
         <textarea
           onChange={(e) => setDescription(e.target.value)}
-          className="border border-gray-300 px-4 py-2 w-full rounded-lg"
+          className="border border-gray-300 px-4 py-2 w-full rounded-lg resize-none"
           rows="4"
           cols="50"
           defaultValue={""}
           required
           placeholder="Enter video description"
           draggable="false"
-
         />
       </div>
 
@@ -115,10 +133,25 @@ function UploadForm() {
       <div className="mb-4">
         <input
           type="file"
+          accept="video/*"
           onChange={(e) => setFile(e.target.files[0])}
           className="border border-gray-300 px-4 py-2 w-full rounded-lg"
           required
         />
+      </div>
+      <label>Category</label>
+      <div className="mb-4" onChange={(e) => setCategory(e.target.value)}>
+        <select
+          className="border border-gray-300 px-4 py-2 w-full rounded-lg"
+          required
+        >
+          <option value="">Select Category</option>
+          <option value="Music">Music</option>
+          <option value="Sports">Sports</option>
+          <option value="Entertainment">Entertainment</option>
+          <option value="Entertainment">Technology</option>
+
+        </select>
       </div>
 
       <Button

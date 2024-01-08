@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 export const LogOut = () => {
   const router = useRouter();
-  const { setIsLoggedIn } = useContext(AuthContext);
+  const { setIsLoggedIn} = useContext(AuthContext);
 
   // Check if running on the client side
   useEffect(() => {

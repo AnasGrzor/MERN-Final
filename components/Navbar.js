@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -26,8 +26,8 @@ const routes = [
 ];
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const { isLoggedIn } = useContext(AuthContext);
+  const user = isLoggedIn ? JSON.parse(localStorage.getItem("profile")) : null;
   return (
     <header className="bg-purple-800 flex flex-col md:flex-row justify-between p-6 w-full text-white">
       <div className="flex items-center">
@@ -49,27 +49,10 @@ const Navbar = () => {
       <div className="mt-4 md:mt-0 flex">
         {isLoggedIn && (
           <>
-            <Avatar className="w-10 h-10 mr-4">
-            <Link href="/profile">
-              <AvatarImage src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
-            </Link>
-              <AvatarFallback>
-                <span className="sr-only">Upload</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"
-                  />
-                </svg>
-              </AvatarFallback>
+            <Avatar className="mr-4 ">
+            <Link href={`/profile/${user.username}`}>
+              <AvatarImage src={user.profilePic} />
+              </Link>
             </Avatar>
             <Button
               variant="default"

@@ -10,7 +10,7 @@ import { AuthContext } from "@/features/auth/AuthContext";
 
 const LoginForm = () => {
   const router = useRouter();
-  const { IsLoggedIn,setIsLoggedIn } = useContext(AuthContext);
+  const { IsLoggedIn,setIsLoggedIn, setProfileOnLogin } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -64,11 +64,14 @@ const LoginForm = () => {
         if (response.status === 200) {
           // Handle successful signup (redirect, show success message, etc.)
           response.json().then((data) => {
+            console.log(data);
             localStorage.setItem("token", data.accessToken);
+            localStorage.setItem("profile", JSON.stringify(data.profile));
+            setProfileOnLogin();
             setIsLoggedIn(true);
           })
 
-          toast.success("Signin successful", {
+          toast.success("Sign-in successful", {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
@@ -174,6 +177,6 @@ return (
 )
 
 }
-    
+
 
 export default LoginForm;

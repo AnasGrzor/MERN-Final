@@ -2,22 +2,28 @@
 import { useState, useEffect, useMemo } from "react";
 import Videocard from "./Videocard";
 import VideoCardSkeleton from "./VideoCardSkeleton";
+import {Filter} from "./Filter";
 
 const VideoList = () => {
-  const [files, setFiles] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+   const [files, setFiles] = useState([]);
+   const [filteredFiles, setFilteredFiles] = useState([]); // State for filtered files
+   const [isLoading, setIsLoading] = useState(true);
 
-  const [dataCache, setDataCache] = useState({});
+   const [dataCache, setDataCache] = useState({});
 
-  const memoCard = useMemo(() => {
-    return (
-      <div className="flex flex-wrap">
-        {files.map((file) => (
-          <Videocard key={file.id} file={file} />
-        ))}
-      </div>
-    );
-  },[files]);
+   const memoCard = useMemo(() => {
+     return (
+       <div className="flex flex-wrap">
+         {filteredFiles.map(
+           (
+             file // Use filteredFiles instead of files
+           ) => (
+             <Videocard key={file.id} file={file} />
+           )
+         )}
+       </div>
+     );
+   }, [filteredFiles]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,6 +50,7 @@ const VideoList = () => {
 
           console.log("Fetched data:", data.files);
           setFiles(data.files);
+          setFilteredFiles(data.files);
           setIsLoading(false);
         }
       } catch (error) {
@@ -64,7 +71,15 @@ const VideoList = () => {
     );
   }
 
-  return <div className="flex flex-wrap">{memoCard}</div>;
+  return (
+    <div>
+      <div className="flex justify-end p-2 ">
+        <Filter videos={files} setFilteredVideos={setFilteredFiles} />{" "}
+      </div>
+
+      <div className="flex flex-wrap ml-16 drop-shadow-2xl">{memoCard}</div>
+    </div>
+  );
 };
 
 export default VideoList;
