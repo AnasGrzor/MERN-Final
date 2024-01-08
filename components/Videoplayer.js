@@ -21,14 +21,11 @@ const VideoPlayer = ({ videoUrl }) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        console.log("Fetch response:", response);
         return response.blob();
       })
       .then((blob) => {
-        console.log("Fetched Blob:", blob);
 
         const url = URL.createObjectURL(blob);
-        console.log("Created Blob URL:", url);
 
         setVideoBlobUrl(url);
         setIsLoading(false);

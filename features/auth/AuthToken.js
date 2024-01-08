@@ -1,7 +1,7 @@
 export const refreshToken = async (req, res) => {
     try {
         token = localStorage.getItem("token");
-        const response = await fetch ("http://localhost:4000/auth/refresh", {
+        const response = await fetch ("https://wizbackend.cyclic.app/auth/refresh", {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${token}`,
@@ -13,9 +13,8 @@ export const refreshToken = async (req, res) => {
         if (response.status === 200) {
             const data = await response.json();
             localStorage.setItem("token", data.accessToken);
-            console.log(data);
         }
-        
+
     } catch (error) {
         console.error(error);
     }

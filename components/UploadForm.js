@@ -30,7 +30,7 @@ function UploadForm() {
     }
 
     const formData = new FormData();
-    console.log(file);
+
     const user = JSON.parse(localStorage.getItem("profile"));
     formData.append("title", title);
     formData.append("myVideo", file);
@@ -49,22 +49,6 @@ function UploadForm() {
     });
 
     const data = await response.json();
-    console.log(data);
-
-    if (response.status === 403) {
-      await refreshToken();
-      const response = await fetch("http://localhost:4000/api/video/upload", {
-        method: "POST",
-        body: formData,
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-
-      const data = await response.json();
-      console.log(data);
-
-    }
 
     if (response.status === 200) {
       toast.success("Video uploaded successfully"),

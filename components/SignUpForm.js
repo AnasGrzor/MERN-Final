@@ -25,7 +25,7 @@ const SignupForm = () => {
   const handleSubmit = async (e) => {
     // Prevent form submission
     e.preventDefault();
-    console.log("clicked")
+
 
     // Validate the form fields
     const validationErrors = {};
@@ -52,14 +52,13 @@ const SignupForm = () => {
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      console.log("errors", validationErrors)
       return;
     }
 
     // If validation passes, handle form submission (send data to the server, etc.)
     // You can add your API call here or navigate to a different page
     try {
-      const response = await fetch("http://localhost:4000/api/users/register", {
+      const response = await fetch("https://wizbackend.cyclic.app/api/users/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

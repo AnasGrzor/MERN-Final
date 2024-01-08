@@ -12,7 +12,7 @@ export const LogOut = () => {
   // Check if running on the client side
   useEffect(() => {
     if (typeof window !== "undefined") {
-      fetch("http://localhost:4000/auth/logout", {
+      fetch("https://wizbackend.cyclic.app/auth/logout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

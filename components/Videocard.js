@@ -17,8 +17,6 @@ const Videocard = ({ file }) => {
 
   const handlePlay = () => {
     setShowVideoPlayer(true);
-    console.log("Clicked");
-    console.log(URL);
   };
 
   const FormatedDate = new Date(createdAt).toLocaleString("en-US", {

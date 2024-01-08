@@ -54,7 +54,7 @@ const LoginForm = () => {
     if (Object.values(newErrors).every((error) => error === "")) {
       // Perform your sign-in logic here
       try {
-        const response = await fetch("http://localhost:4000/auth/login", {
+        const response = await fetch("https://wizbackend.cyclic.app/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -64,7 +64,6 @@ const LoginForm = () => {
         if (response.status === 200) {
           // Handle successful signup (redirect, show success message, etc.)
           response.json().then((data) => {
-            console.log(data);
             localStorage.setItem("token", data.accessToken);
             localStorage.setItem("profile", JSON.stringify(data.profile));
             setProfileOnLogin();

@@ -30,13 +30,13 @@ const VideoList = () => {
       try {
         // Check if the data is already cached
         if (dataCache.hasOwnProperty("files")) {
-          console.log("Data retrieved from cache:", dataCache.files);
+
           setFiles(dataCache.files);
           setIsLoading(false);
         } else {
           // Fetch video data from your server
           const response = await fetch(
-            "http://localhost:4000/api/video/allFiles"
+            "https://wizbackend.cyclic.app/api/video/allFiles"
           );
 
           if (!response.ok) {
@@ -47,8 +47,7 @@ const VideoList = () => {
 
           // Update cache with fetched data
           setDataCache({ files: data.files });
-
-          console.log("Fetched data:", data.files);
+          
           setFiles(data.files);
           setFilteredFiles(data.files);
           setIsLoading(false);

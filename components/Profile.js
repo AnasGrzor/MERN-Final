@@ -77,7 +77,7 @@ const UserProfile = () => {
     if (validateForm()) {
       try {
         const response = await fetch(
-          `http://localhost:4000/api/users/${userId}`,
+          `https://wizbackend.cyclic.app/api/users/${userId}`,
           {
             method: "PATCH",
             headers: {

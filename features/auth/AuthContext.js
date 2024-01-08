@@ -18,7 +18,6 @@ export const AuthProvider = ({ children }) => {
     }
 
     const decodedToken = jwtDecode(token);
-    console.log(decodedToken);
 
     if (decodedToken.exp * 1000 < Date.now()) {
       localStorage.clear()
