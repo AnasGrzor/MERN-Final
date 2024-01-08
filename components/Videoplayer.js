@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState, useEffect } from "react";
 import ReactPlayer from "react-player";
@@ -8,14 +8,13 @@ const VideoPlayer = ({ videoUrl }) => {
   const [videoBlobUrl, setVideoBlobUrl] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-
   useEffect(() => {
     setIsLoading(true);
     // Fetch the video data as a stream when the component mounts
     fetch(videoUrl, {
       headers: {
-        "Range": "bytes=0-",
-      }
+        Range: "bytes=0-",
+      },
     })
       .then((response) => {
         if (!response.ok) {
@@ -24,7 +23,6 @@ const VideoPlayer = ({ videoUrl }) => {
         return response.blob();
       })
       .then((blob) => {
-
         const url = URL.createObjectURL(blob);
 
         setVideoBlobUrl(url);
@@ -37,11 +35,18 @@ const VideoPlayer = ({ videoUrl }) => {
 
   return (
     <div>
-    {isLoading && <VideoPlayerSkeleton />}
-        <div>
-          {/* {videoBlobUrl && <ReactPlayer url={videoBlobUrl} controls={true} width="100%" height="100%" playIcon={<PlayIcon className="w-12 h-12" />} playing={true} muted={true} />} */}
-          <ReactPlayer url={videoBlobUrl} controls={true} playing muted width="100%" height="275px" />
-        </div>
+      {isLoading && <VideoPlayerSkeleton />}
+      <div>
+        {/* {videoBlobUrl && <ReactPlayer url={videoBlobUrl} controls={true} width="100%" height="100%" playIcon={<PlayIcon className="w-12 h-12" />} playing={true} muted={true} />} */}
+        <ReactPlayer
+          url={videoBlobUrl}
+          controls={true}
+          playing
+          muted
+          width="100%"
+          height="275px"
+        />
+      </div>
     </div>
   );
 };
